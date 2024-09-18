@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>カニ＠鳩ツール</title>
+<style>
+  body {
+    background-color: #000; /* 背景色を黒に設定 */
+    color: #f1c40f; /* 文字色を黄色に設定 */
+    font-size: 24px; /* フォントサイズを大き目に設定 */
+  }
+  h1 {
+    text-align: center; /* 見出しを中央揃えに設定 */
+  }
+  div {
+    margin-bottom: 20px; /* 各セクションの下部に余白を追加 */
+  }
+  .result {
+    font-weight: bold; /* 抽選された文字を太字に設定 */
+    font-size: 36px; /* 抽選された文字のフォントサイズを更に大きく設定 */
+    color: #00ff7f; /* 抽選された文字の色を緑色に設定 */
+  }
+  #randomButton {
+    display: block; /* ボタンをブロック要素に設定 */
+    margin: 0 auto; /* ボタンを中央に配置 */
+    margin-top: 20px; /* 上部に余白を追加 */
+  }
+</style>
+<script>
+function generateRandom() {
+  // カニを抽選
+  const crabVarieties = [
+    'クマドリオウギガニ', 'キンセンガニ', 'ミナミオカガニ', 'モクズガニβ', 'アカテガニ',
+    'オオエンコウガニ', 'ハナサキガニ', 'ケガニβ', 'タスマニアオオガニ', 'タスマニアオオザリガニ',
+    'カリビアンキングクラブ', 'ズワイガニ', 'ガザミ', 'トラフカラッパ', 'エンコウガニ', 'ヒシガニ',
+    'ベニイワガニ', 'アサヒガニ', 'ロブスター', 'ダンジネスクラブ', 'クリスマスアカガニ', 'ノコギリガザミ',
+    'オオホモラ', 'ヤシガニ', 'タラバガニ', 'オオカイカムリ', 'タカアシガニ', 'メタルクラブ', 'シャコ',
+    'シオマネキ', 'モクズガニα', 'ケガニ'
+  ];
+  const randomCrab = crabVarieties[Math.floor(Math.random() * crabVarieties.length)];
+  
+  // 右手のアイテムを抽選
+  const rightHandItems = [
+    'シュリケン', 'サイ', 'ナイフ', 'マスケット', 'レイピア', 'ゴウ', 'コチョウトウ',
+    '(乗り物)サンリンシャ', 'ジャマダハル', 'ショーテル', 'ダンベル', 'トンファー', 'バット', 'フウカリン',
+    '(乗り物)アザラシ', 'アックスガン', 'ウォーハンマー', 'ガーダ', 'ザグナル', 'ジャバラケン',
+    'ジャベリン', '(乗り物)スクーター', 'スパイククラブ', 'スピア', 'ソード', 'ソーブレード', 'テッセン',
+    'ヌンチャク', 'バズソー', 'パリィングシールド', 'ハンドアックス', 'ビームセイバー', 'フレイル',
+    'ボクシンググラブ', 'メイス', 'ラウンドシールド', 'ランス', 'アンカー', 'カイトシールド', '(乗り物)キントウン',
+    '(両手)グアンダオ', '(両手)クレイモア', 'コン', '(乗り物)サメ', '(両手)デュエリングシールド', 'ドリル', '(乗り物)ドローン',
+    'パイルバンカー', 'ブーメラン', '(両手)フットマンズフレイル', 'レックススカル', 'カタナ', 'クサリガマ',
+    '(両手)サンセツコン', '(両手)ダブルセイバー', '(両手)チェーンソー', 'ティルヴィング', '(両手)デュアルブレード', '(両手)ノダチ',
+    'ヨーヨー', '(両手)エクスカニバー', '(両手)グレートハンマー', 'ショットガン', '(両手)バルディッシュ', '(両手)ハルバード',
+    'リボルバー', 'ソードメイス', 'ジェット', 'ヘビーソード', 'ジェットドリル', 'トライデント', '(両手)バーベル',
+    '(両手)グレートソード', '(両手)カナボウ', '(両手)グレートアックス', '(両手)ロクゴウタイソウ'
+  ];
+  let randomRightHand = rightHandItems[Math.floor(Math.random() * rightHandItems.length)];
+
+  // 左手のアイテムを抽選
+  const leftHandItems = rightHandItems.filter(item => !item.startsWith('(乗り物)'));
+  let randomLeftHand = leftHandItems[Math.floor(Math.random() * leftHandItems.length)];
+
+  // "(両手)"から始まるアイテムが抽選された場合、もう片方を「ステゴロ」に設定
+  if (randomRightHand.startsWith('(両手)')) {
+    randomLeftHand = 'ステゴロ';
+  }
+  if (randomLeftHand.startsWith('(両手)')) {
+    randomRightHand = 'ステゴロ';
+  }
+
+  // 追加枠のアイテムを抽選
+  const additionalItems = [
+    'シュリケン', 'サイ', 'ナイフ', 'マスケット', 'レイピア', 'ゴウ', 'コチョウトウ',
+    '(乗り物)サンリンシャ', 'ジャマダハル', 'ショーテル', 'ダンベル', 'トンファー', 'バット', 'フウカリン',
+    '(乗り物)アザラシ', 'アックスガン', 'ウォーハンマー', 'ガーダ', 'ザグナル', 'ジャバラケン',
+    'ジャベリン', '(乗り物)スクーター', 'スパイククラブ', 'スピア', 'ソード', 'ソーブレード', 'テッセン',
+    'ヌンチャク', 'バズソー', 'パリィングシールド', 'ハンドアックス', 'ビームセイバー', 'フレイル',
+    'ボクシンググラブ', 'メイス', 'ラウンドシールド', 'ランス', 'アンカー', 'カイトシールド', '(乗り物)キントウン',
+    '(両手)グアンダオ', '(両手)クレイモア', 'コン', '(乗り物)サメ', '(両手)デュエリングシールド', 'ドリル', '(乗り物)ドローン',
+    'パイルバンカー', 'ブーメラン', '(両手)フットマンズフレイル', 'レックススカル', 'カタナ', 'クサリガマ',
+    '(両手)サンセツコン', '(両手)ダブルセイバー', '(両手)チェーンソー', 'ティルヴィング', '(両手)デュアルブレード', '(両手)ノダチ',
+    'ヨーヨー', '(両手)エクスカニバー', '(両手)グレートハンマー', 'ショットガン', '(両手)バルディッシュ', '(両手)ハルバード',
+    'リボルバー', 'ソードメイス', 'ジェット', 'ヘビーソード', 'ジェットドリル', 'トライデント', '(両手)バーベル',
+    '(両手)グレートソード', '(両手)カナボウ', '(両手)グレートアックス', '(両手)ロクゴウタイソウ', 'キャノン', 'センプウキ',
+    'ダイナマイトダッシュ', 'ツナ', 'トラバサミ', 'パンジャンドラム', 'ロケット', 'ウィング', 'カニコウセン',
+    'コメツキガニ', 'サーキットフィールド', 'バースト', 'バリケード', 'ファイアクロー', 'ヤサイノジン',
+    'レーザータレット', 'チェーンバインド', 'ブレイズアップ', 'ダッシュブースター'
+  ];
+  const randomAdditional = additionalItems[Math.floor(Math.random() * additionalItems.length)];
+
+  // 結果を表示
+  document.getElementById('crabResult').innerText = randomCrab;
+  document.getElementById('rightHandResult').innerText = randomRightHand;
+  document.getElementById('leftHandResult').innerText = randomLeftHand;
+  document.getElementById('additionalResult').innerText = randomAdditional;
+}
+</script>
+</head>
+<body>
+<div>
+  <h2>カニ:</h2>
+  <p id="crabResult" class="result"></p>
+</div>
+<div>
+  <h2>右手:</h2>
+  <p id="rightHandResult" class="result"></p>
+</div>
+<div>
+  <h2>左手:</h2>
+  <p id="leftHandResult" class="result"></p>
+</div>
+<div>
+  <h2>追加:</h2>
+  <p id="additionalResult" class="result"></p>
+</div>
+<button id="randomButton" onclick="generateRandom()">ランダム</button>
+</body>
+</html>
